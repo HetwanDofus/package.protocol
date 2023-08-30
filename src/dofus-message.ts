@@ -1,4 +1,4 @@
-import type { BinaryDataReader, BinaryDataWriter } from "@hetwan/io/dist/index";
+import type { BinaryDataReader, BinaryDataWriter } from "@hetwan.io";
 
 export default abstract class DofusMessage {
   _id: number;

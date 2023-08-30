@@ -5,7 +5,7 @@ import {
   BigEndianWriter,
   type BinaryDataReader,
   type BinaryDataWriter,
-} from "@hetwan/io";
+} from "@hetwan.io";
 
 import { DofusMessage } from "@hetwan/protocol";
 

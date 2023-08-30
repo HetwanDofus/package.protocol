@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 
-import type { BinaryDataReader, BinaryDataWriter } from "@hetwan/io";
+import type { BinaryDataReader, BinaryDataWriter } from "@hetwan.io";
 
 import NetworkMessage from "@hetwan/protocol/network-message";
 import DofusMessage from "@hetwan/protocol/dofus-message";

@@ -1,4 +1,4 @@
-import { BinaryDataWriter, BinaryDataReader } from '@hetwan/io';
+import { BinaryDataWriter, BinaryDataReader } from '@hetwan.io';
 
 declare abstract class DofusMessage {
     _id: number;
