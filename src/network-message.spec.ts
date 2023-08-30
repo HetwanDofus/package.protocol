@@ -4,39 +4,23 @@ import type { BinaryDataReader, BinaryDataWriter } from "@hetwan.io";
 
 import NetworkMessage from "@hetwan/protocol/network-message";
 import DofusMessage from "@hetwan/protocol/dofus-message";
+import {BasicPingMessage} from '@hetwan/protocol';
 
 describe("NetworkMessage", () => {
-  const message = new (class TestMessage extends DofusMessage {
-    public value: number = 0;
-
-    constructor() {
-      super(10);
-    }
-
-    serialize(writer: BinaryDataWriter) {
-      writer.writeByte(1);
-      writer.writeUInt(1);
-    }
-
-    deserialize(reader: BinaryDataReader) {
-      this.value = reader.readByte();
-      reader.readUInt();
-    }
-  })();
-
   test("deserialize", () => {
+    const message = new BasicPingMessage(true);
     const wrapperBuffer = NetworkMessage.encode(message);
     const result = NetworkMessage.decode(wrapperBuffer);
 
-    expect(result.messageId).toEqual(10);
+    expect(result.messageId).toEqual(BasicPingMessage.id);
 
     // Force value to be wrong
-    message.value = 999;
+    message.quiet = false;
 
     message.deserialize(result.messageReader);
 
     // If value has been changed, it means that the message has been deserialized
-    expect(message.value).toEqual(1);
+    expect(message.quiet).toEqual(true);
     expect(result.messageReader.getRemaining()).toBe(0);
   });
 });

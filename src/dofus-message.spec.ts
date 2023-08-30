@@ -11,10 +11,12 @@ import { DofusMessage } from "@hetwan/protocol";
 
 describe("DofusMessage", () => {
   const message = new (class Test extends DofusMessage {
+    public static id: number = 10;
+    
     public value: number = 0;
 
     constructor() {
-      super(10);
+      super();
     }
 
     serialize(writer: BinaryDataWriter) {

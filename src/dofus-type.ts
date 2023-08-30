@@ -1,6 +1,6 @@
-import type { BinaryDataReader, BinaryDataWriter } from "@hetwan.io";
+import { BinaryDataReader, BinaryDataWriter } from "@hetwan.io";
 
-export default abstract class DofusMessage {
+export default class DofusType {
   public static id: number;
   public id: number;
 
@@ -10,10 +10,10 @@ export default abstract class DofusMessage {
   }
 
   public serialize(_: BinaryDataWriter): void {
-    throw "Serializing empty message";
+    throw "Serializing empty type";
   }
 
   public deserialize(_: BinaryDataReader): void {
-    throw "Deserializing empty message";
+    throw "Deserializing empty type";
   }
 }

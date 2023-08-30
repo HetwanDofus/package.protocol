@@ -24,7 +24,7 @@
         }
     },
     "dependencies": {
-        "@hetwan.io": "github:HetwanDofus/package.io",
+        "@hetwan.io": "github:HetwanDofus/package.io#70ba17a",
         "ts-pattern": "^5.0.5"
     },
     "devDependencies": {
