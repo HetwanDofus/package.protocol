@@ -6083,8 +6083,6 @@ export class FightExternalInformations extends DofusType {
   public id: number = 7149;
 
   public fightType: number | undefined = 0;
-  public _fightTeamsOptionsindex: number | undefined = 0;
-  public _fightTeamsindex: number | undefined = 0;
   public fightId: number | undefined = 0;
   public fightTeamsOptions: FightOptionsInformations[] | undefined;
   public fightSpectatorLocked: boolean | undefined = false;
@@ -6093,8 +6091,6 @@ export class FightExternalInformations extends DofusType {
 
   public constructor(
     fightType?: number | undefined,
-    _fightTeamsOptionsindex?: number | undefined,
-    _fightTeamsindex?: number | undefined,
     fightId?: number | undefined,
     fightTeamsOptions?: FightOptionsInformations[] | undefined,
     fightSpectatorLocked?: boolean | undefined,
@@ -6103,8 +6099,6 @@ export class FightExternalInformations extends DofusType {
   ) {
     super();
     this.fightType = fightType;
-    this._fightTeamsOptionsindex = _fightTeamsOptionsindex;
-    this._fightTeamsindex = _fightTeamsindex;
     this.fightId = fightId;
     this.fightTeamsOptions = fightTeamsOptions;
     this.fightSpectatorLocked = fightSpectatorLocked;
@@ -6114,8 +6108,6 @@ export class FightExternalInformations extends DofusType {
 
   public serialize(writer: BinaryDataWriter): void {
     writer.writeByte(this.fightType!);
-    this._fightTeamsOptionsindex!.serialize(writer);
-    this._fightTeamsindex!.serialize(writer);
     writer.writeVarShort(this.fightId!);
     this.fightTeamsOptions!.forEach((current) => {
       current.serialize(writer);
@@ -6129,10 +6121,6 @@ export class FightExternalInformations extends DofusType {
 
   public deserialize(reader: BinaryDataReader): void {
     this.fightType = reader.readByte();
-    this._fightTeamsOptionsindex = new number();
-    this._fightTeamsOptionsindex!.deserialize(reader);
-    this._fightTeamsindex = new number();
-    this._fightTeamsindex!.deserialize(reader);
     this.fightId = reader.readVarShort();
     this.fightTeamsOptions = [];
     for (let i: number = 0; i < 2; i++) {
@@ -16182,28 +16170,22 @@ export class ShowCellSpectatorMessage extends ShowCellMessage {
 export class GameFightPlacementSwapPositionsMessage extends DofusMessage {
   public static id: number = 995;
 
-  public _dispositionsindex: number | undefined = 0;
   public dispositions: IdentifiedEntityDispositionInformations[] | undefined;
 
   public constructor(
-    _dispositionsindex?: number | undefined,
     dispositions?: IdentifiedEntityDispositionInformations[] | undefined,
   ) {
     super();
-    this._dispositionsindex = _dispositionsindex;
     this.dispositions = dispositions;
   }
 
   public serialize(writer: BinaryDataWriter): void {
-    this._dispositionsindex!.serialize(writer);
     this.dispositions!.forEach((current) => {
       current.serialize(writer);
     });
   }
 
   public deserialize(reader: BinaryDataReader): void {
-    this._dispositionsindex = new number();
-    this._dispositionsindex!.deserialize(reader);
     this.dispositions = [];
     for (let i: number = 0; i < 2; i++) {
       const type: IdentifiedEntityDispositionInformations =
@@ -37744,7 +37726,6 @@ export class CharacterCreationRequestMessage extends DofusMessage {
 
   public cosmeticId: number | undefined = 0;
   public name: string | undefined;
-  public _colorsindex: number | undefined = 0;
   public colors: number[] | undefined;
   public breed: number | undefined = 0;
   public sex: boolean | undefined = false;
@@ -37752,7 +37733,6 @@ export class CharacterCreationRequestMessage extends DofusMessage {
   public constructor(
     cosmeticId?: number | undefined,
     name?: string | undefined,
-    _colorsindex?: number | undefined,
     colors?: number[] | undefined,
     breed?: number | undefined,
     sex?: boolean | undefined,
@@ -37760,7 +37740,6 @@ export class CharacterCreationRequestMessage extends DofusMessage {
     super();
     this.cosmeticId = cosmeticId;
     this.name = name;
-    this._colorsindex = _colorsindex;
     this.colors = colors;
     this.breed = breed;
     this.sex = sex;
@@ -37769,7 +37748,6 @@ export class CharacterCreationRequestMessage extends DofusMessage {
   public serialize(writer: BinaryDataWriter): void {
     writer.writeVarShort(this.cosmeticId!);
     writer.writeUTF(this.name!);
-    this._colorsindex!.serialize(writer);
     this.colors!.forEach((current: number) => writer.writeInt(current));
     writer.writeByte(this.breed!);
     writer.writeBoolean(this.sex!);
@@ -37778,8 +37756,6 @@ export class CharacterCreationRequestMessage extends DofusMessage {
   public deserialize(reader: BinaryDataReader): void {
     this.cosmeticId = reader.readVarShort();
     this.name = reader.readUTF();
-    this._colorsindex = new number();
-    this._colorsindex!.deserialize(reader);
     this.colors = [];
     for (let i: number = 0; i < 5; i++) {
       this.colors.push(reader.readInt());
