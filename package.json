@@ -1,6 +1,7 @@
 {
     "name": "@hetwan/protocol",
     "license": "MIT",
+    "version": "2.62.5.15"
     "type": "module",
     "author": {
         "name": "Jean Walrave",
