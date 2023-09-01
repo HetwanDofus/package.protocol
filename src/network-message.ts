@@ -28,7 +28,7 @@ export default class NetworkMessage {
     wrapperWriter.writeShort(this.subComputeStaticHeader(message.id, type));
 
     // For tests purposes
-    if (instanceId) {
+    if (instanceId !== undefined) {
       wrapperWriter.writeUInt(instanceId);
     }
 
