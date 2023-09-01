@@ -37,8 +37,8 @@ import {
 var NetworkMessage = class _NetworkMessage {
   static BIT_RIGHT_SHIFT_LEN_PACKET_ID = 2;
   static BIT_MASK = 3;
-  static PACKET_METADATA_LENGTH = 7;
-  static encode(message) {
+  static PACKET_METADATA_LENGTH = 20;
+  static encode(message, instanceId) {
     const messageWriter = new BigEndianWriter();
     message.serialize(messageWriter);
     const wrapperWriter = new BigEndianWriter(
@@ -47,8 +47,10 @@ var NetworkMessage = class _NetworkMessage {
       )
     );
     const type = this.computeTypeLength(messageWriter.getPointer());
-    wrapperWriter.writeUShort(this.subComputeStaticHeader(message.id, type));
-    wrapperWriter.writeUInt(1);
+    wrapperWriter.writeShort(this.subComputeStaticHeader(message.id, type));
+    if (instanceId !== void 0) {
+      wrapperWriter.writeUInt(instanceId);
+    }
     match(type).with(1, () => wrapperWriter.writeByte(messageWriter.getPointer())).with(2, () => wrapperWriter.writeShort(messageWriter.getPointer())).with(3, () => {
       wrapperWriter.writeByte(messageWriter.getPointer() >> 16 & 255);
       wrapperWriter.writeShort(messageWriter.getPointer() & 65535);
@@ -60,7 +62,7 @@ var NetworkMessage = class _NetworkMessage {
   }
   static decode(data) {
     const reader = new BigEndianReader(data);
-    const messageHeader = reader.readUShort();
+    const messageHeader = reader.readShort();
     const messageId = messageHeader >> 2;
     const typeLength = messageHeader & 3;
     const instanceId = reader.readUInt();
