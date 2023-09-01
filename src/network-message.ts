@@ -11,9 +11,9 @@ import DofusMessage from "@hetwan/protocol/dofus-message";
 export default class NetworkMessage {
   static readonly BIT_RIGHT_SHIFT_LEN_PACKET_ID = 2;
   static readonly BIT_MASK = 3;
-  static readonly PACKET_METADATA_LENGTH = 7;
+  static readonly PACKET_METADATA_LENGTH = 20;
 
-  static encode(message: DofusMessage): Buffer {
+  static encode(message: DofusMessage, instanceId?: number): Buffer {
     const messageWriter = new BigEndianWriter();
     message.serialize(messageWriter);
 
@@ -27,8 +27,10 @@ export default class NetworkMessage {
 
     wrapperWriter.writeShort(this.subComputeStaticHeader(message.id, type));
 
-    // Instance id ?
-    wrapperWriter.writeUInt(1);
+    // For tests purposes
+    if (instanceId) {
+      wrapperWriter.writeUInt(instanceId);
+    }
 
     match(type)
       .with(1, () => wrapperWriter.writeByte(messageWriter.getPointer()))
