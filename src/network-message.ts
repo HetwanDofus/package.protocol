@@ -25,7 +25,7 @@ export default class NetworkMessage {
 
     const type: number = this.computeTypeLength(messageWriter.getPointer());
 
-    wrapperWriter.writeUShort(this.subComputeStaticHeader(message.id, type));
+    wrapperWriter.writeShort(this.subComputeStaticHeader(message.id, type));
 
     // Instance id ?
     wrapperWriter.writeUInt(1);
@@ -53,7 +53,7 @@ export default class NetworkMessage {
     messageReader: BinaryDataReader;
   } {
     const reader = new BigEndianReader(data);
-    const messageHeader: number = reader.readUShort();
+    const messageHeader: number = reader.readShort();
 
     const messageId: number = messageHeader >> 2;
     const typeLength: number = messageHeader & 3;
