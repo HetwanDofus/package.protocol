@@ -21801,17 +21801,17 @@ var HelloConnectMessage = class extends DofusMessage {
     this.salt = salt;
   }
   serialize(writer) {
+    writer.writeUTF(this.salt);
     writer.writeVarInt(this.key.length);
     this.key.forEach((current) => writer.writeByte(current));
-    writer.writeUTF(this.salt);
   }
   deserialize(reader) {
+    this.salt = reader.readUTF();
     this.key = [];
     const countKey = reader.readVarInt();
     for (let i = 0; i < countKey; i++) {
       this.key.push(reader.readByte());
     }
-    this.salt = reader.readUTF();
   }
 };
 var FriendStatusShareStateMessage = class extends DofusMessage {
