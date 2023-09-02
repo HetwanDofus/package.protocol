@@ -29442,18 +29442,18 @@ export class HelloConnectMessage extends DofusMessage {
   }
 
   public serialize(writer: BinaryDataWriter): void {
+    writer.writeUTF(this.salt!);
     writer.writeVarInt(this.key!.length);
     this.key!.forEach((current: number) => writer.writeByte(current));
-    writer.writeUTF(this.salt!);
   }
 
   public deserialize(reader: BinaryDataReader): void {
+    this.salt = reader.readUTF();
     this.key = [];
     const countKey = reader.readVarInt();
     for (let i: number = 0; i < countKey; i++) {
       this.key.push(reader.readByte());
     }
-    this.salt = reader.readUTF();
   }
 }
 
