@@ -19,7 +19,8 @@ declare class DofusType {
 declare class NetworkMessage {
     static readonly BIT_RIGHT_SHIFT_LEN_PACKET_ID = 2;
     static readonly BIT_MASK = 3;
-    static readonly PACKET_METADATA_LENGTH = 20;
+    static readonly DEFAULT_PACKET_SIZE: number;
+    static readonly PACKET_METADATA_LENGTH = 7;
     static encode(message: DofusMessage, instanceId?: number): Buffer;
     static decode(data: Buffer): {
         messageId: number;

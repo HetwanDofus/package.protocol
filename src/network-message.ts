@@ -11,10 +11,14 @@ import DofusMessage from "@hetwan/protocol/dofus-message";
 export default class NetworkMessage {
   static readonly BIT_RIGHT_SHIFT_LEN_PACKET_ID = 2;
   static readonly BIT_MASK = 3;
-  static readonly PACKET_METADATA_LENGTH = 20;
+  static readonly DEFAULT_PACKET_SIZE: number = 2048;
+  static readonly PACKET_METADATA_LENGTH = 7;
 
   static encode(message: DofusMessage, instanceId?: number): Buffer {
-    const messageWriter = new BigEndianWriter();
+    const messageWriter = new BigEndianWriter(
+      Buffer.allocUnsafe(this.DEFAULT_PACKET_SIZE),
+      this.DEFAULT_PACKET_SIZE
+    );
     message.serialize(messageWriter);
 
     const wrapperWriter = new BigEndianWriter(

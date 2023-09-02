@@ -37,9 +37,13 @@ import {
 var NetworkMessage = class _NetworkMessage {
   static BIT_RIGHT_SHIFT_LEN_PACKET_ID = 2;
   static BIT_MASK = 3;
-  static PACKET_METADATA_LENGTH = 20;
+  static DEFAULT_PACKET_SIZE = 2048;
+  static PACKET_METADATA_LENGTH = 7;
   static encode(message, instanceId) {
-    const messageWriter = new BigEndianWriter();
+    const messageWriter = new BigEndianWriter(
+      Buffer.allocUnsafe(this.DEFAULT_PACKET_SIZE),
+      this.DEFAULT_PACKET_SIZE
+    );
     message.serialize(messageWriter);
     const wrapperWriter = new BigEndianWriter(
       Buffer.allocUnsafe(
